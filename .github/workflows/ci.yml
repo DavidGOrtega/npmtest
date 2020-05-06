@@ -22,7 +22,7 @@ jobs:
         printf "NPM version $NPM_VERSION already exists! \nPlease update package.json version accordingly."
         exit 1
       env:
-        NPM_VERSION: ${{steps.check.outputs.version}}
+        NPM_VERSION: ${steps.check.outputs.version}
 
     - name: Publish to NPM
       if: github.event_name == 'push' && (contains(github.ref, 'tags') || github.ref == 'refs/heads/master')
