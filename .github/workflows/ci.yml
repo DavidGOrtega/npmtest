@@ -12,15 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Check NPM
+    - name: Get NPM version
       id: check
       uses: EndBug/version-check@v1
 
-    - name: EXIT if version not updated
+    - name: Check if NPM version is updated
       if: steps.check.outputs.changed != 'true'
       run: |
         echo "NPM version already existing! \nPlease update package.json version accordingly."
-        return 1
+        exit 1
 
     - name: Publish to NPM
       if: github.event_name == 'push' && (contains(github.ref, 'tags') || github.ref == 'refs/heads/master')
