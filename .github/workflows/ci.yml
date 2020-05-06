@@ -19,8 +19,10 @@ jobs:
     - name: Check if NPM version is updated
       if: steps.check.outputs.changed != 'true'
       run: |
-        echo "NPM version already existing! \nPlease update package.json version accordingly."
+        echo "NPM version $NPM_VERSION already existing! \nPlease update package.json version accordingly."
         exit 1
+      env:
+        NPM_VERSION: ${{steps.check.outputs.version}}
 
     - name: Publish to NPM
       if: github.event_name == 'push' && (contains(github.ref, 'tags') || github.ref == 'refs/heads/master')
