@@ -19,7 +19,7 @@ jobs:
     - name: Check if NPM version is updated
       if: steps.check.outputs.changed != 'true'
       run: |
-        echo "NPM version $NPM_VERSION already existing! \nPlease update package.json version accordingly."
+        echo "NPM version ${NPM_VERSION} already existing! \nPlease update package.json version accordingly."
         exit 1
       env:
         NPM_VERSION: ${{steps.check.outputs.version}}
