@@ -19,7 +19,7 @@ jobs:
     - name: Check if NPM version is updated
       if: steps.check.outputs.changed != 'true'
       run: |
-        printf "NPM version ${{ steps.check.outputs.commit }} already exists! \nPlease update package.json version accordingly."
+        printf "NPM version ${{ steps.check.outputs.version }} already exists! \nPlease update package.json version accordingly."
         exit 1
 
     - name: Publish to NPM
