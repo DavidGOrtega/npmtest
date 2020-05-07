@@ -14,16 +14,16 @@ jobs:
 
     - name: Get NPM version
       uses: EndBug/version-check@v1
-      id: npmcheck
+      id: check
 
     - name: Version update detected
-      if: steps.npmcheck.outputs.changed == 'true'
+      if: steps.check.outputs.changed == 'true'
       run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
 
     - name: Check if NPM version is updated
-      if: steps.npmcheck.outputs.changed != 'true'
+      if: steps.check.outputs.changed != 'true'
       run: |
-        printf "NPM version ${{ steps.npmcheck.outputs.version }} already exists! \nPlease update package.json version accordingly."
+        printf "NPM version ${{ steps.check.outputs.version }} already exists! \nPlease update package.json version accordingly."
         exit 1
 
     - name: Publish to NPM
