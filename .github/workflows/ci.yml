@@ -17,19 +17,11 @@ jobs:
       id: check
 
     - name: Version update detected
-      if: steps.check.outputs.changed == 'true'
+      if: steps.check.outputs.changed == true
       run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
 
     - name: Check if NPM version is updated
-      if: steps.check.outputs.changed != 'true'
+      if: steps.check.outputs.changed != true
       run: |
         printf "NPM version ${{ steps.check.outputs.version }} already exists! \nPlease update package.json version accordingly."
         exit 1
-
-    - name: Publish to NPM
-      if: github.event_name == 'push' && (contains(github.ref, 'tags') || github.ref == 'refs/heads/master')
-      run: |
-        npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
-        npm publish
-      env:
-        NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
